@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { providers } from 'ethers';
+import { useState } from 'react'
+import {Navbar , Welcome , Footer , Services , Transactions} from './components';
+import { ethers } from 'ethers';
 
-function App() {
+
+const App = ()=> {
+
+    const [accounts, setAccounts] = useState([]);
+    const[isConnected , setIsConnected] = useState(false);
+
+    const temp = async() =>{
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+     const value =  await provider.getTransactionReceipt("0x89e7c8f1aedc29ea952bbc4e4da69bab3fbd62b46419e2668644cccec5a73c82");
+     console.log(value);
+    }
+    temp();
+    
+    
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="min-h-screen">
+      <div className='gradient-bg-welcome'>
+      <Navbar accounts ={accounts} setAccounts={setAccounts} isConnected={isConnected} setIsConnected={setIsConnected}/>
+      <Welcome accounts ={accounts} setAccounts={setAccounts} isConnected={isConnected} setIsConnected={setIsConnected}/>
+      </div>
+      <Services />
+      <Transactions />
+      <Footer /> 
     </div>
-  );
+  )
 }
 
 export default App;
